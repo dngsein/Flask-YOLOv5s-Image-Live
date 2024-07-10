@@ -1,55 +1,29 @@
 
 <h1 align="center">
-  CTR-YOLO
+  CTR-YOLO - Modification of YOLOv5s
   <br>
 </h1>
 
-<h4 align="center">A deployment experiment with flask for object detection model<a href="http://electron.atom.io" target="_blank">Electron</a>.</h4>
+<h4 align="center">A deployment experiment with flask for object detection model.</h4>
 
 <p align="center">
-  <a href="https://badge.fury.io/js/electron-markdownify">
-    <img src="https://badge.fury.io/js/electron-markdownify.svg"
-         alt="Gitter">
-  </a>
-  <a href="https://gitter.im/amitmerchant1990/electron-markdownify"><img src="https://badges.gitter.im/amitmerchant1990/electron-markdownify.svg"></a>
-  <a href="https://saythanks.io/to/bullredeyes@gmail.com">
-      <img src="https://img.shields.io/badge/SayThanks.io-%E2%98%BC-1EAEDB.svg">
-  </a>
-  <a href="https://www.paypal.me/AmitMerchant">
-    <img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat">
-  </a>
-</p>
-
-<p align="center">
-  <a href="#key-features">Key Features</a> •
+  <a href="#model">CTR-YOLOv5 Model</a> •
   <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Download</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#related">Related</a> •
-  <a href="#license">License</a>
+  <a href="#download">Reference</a> •
 </p>
 
 ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
 
-## Key Features
+## CTR-YOLO Model
 
-* LivePreview - Make changes, See changes
-  - Instantly see what your Markdown documents look like in HTML as you create them.
-* Sync Scrolling
-  - While you type, LivePreview will automatically scroll to the current location you're editing.
-* GitHub Flavored Markdown  
-* Syntax highlighting
-* [KaTeX](https://khan.github.io/KaTeX/) Support
-* Dark/Light mode
-* Toolbar for basic Markdown formatting
-* Supports multiple cursors
-* Save the Markdown preview as PDF
-* Emoji support in preview :tada:
-* App will keep alive in tray for quick usage
-* Full screen mode
-  - Write distraction free.
-* Cross platform
-  - Windows, macOS and Linux ready.
+The model was builded by applying architectural modifications to enhance the ability and performance of the model to perform object detection tasks. These modifications aim to address multi-scale problem and improve the accuracy of YOLOv5s.
+
+* Transformer
+Added as block encoder and prediction head to enhance feature extraction and reduce computational cost
+* Convolutional Block Attention Module
+Added to the head for improve model capability of extracting important information from the target object
+* Bi-directional Feature Pyramid Network
+Applied on head that enables easy and quick incorporation of multi-scale features.
 
 ## How To Use
 
