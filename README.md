@@ -12,7 +12,8 @@
   <a href="#download">Reference</a>
 </p>
 
-![screenshot](https://github.com/dngsein/Flask-YOLOv5s-Image-Live/issues/1#issue-2400690741)
+![image](https://github.com/dngsein/Flask-YOLOv5s-Image-Live/assets/89962078/3d499766-0ea1-40f2-af87-a2341ef0a217)
+
 
 ## Model
 
