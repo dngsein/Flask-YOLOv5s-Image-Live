@@ -7,23 +7,23 @@
 <h4 align="center">A deployment experiment with flask for object detection model.</h4>
 
 <p align="center">
-  <a href="#model">CTR-YOLOv5 Model</a> •
+  <a href="#model">Model</a> •
   <a href="#how-to-use">How To Use</a> •
   <a href="#download">Reference</a> •
 </p>
 
 ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
 
-## CTR-YOLO Model
+## Model
 
 The model was builded by applying architectural modifications to enhance the ability and performance of the model to perform object detection tasks. These modifications aim to address multi-scale problem and improve the accuracy of YOLOv5s.
 
 * Transformer
-Added as block encoder and prediction head to enhance feature extraction and reduce computational cost
+- Added as block encoder and prediction head to enhance feature extraction and reduce computational cost
 * Convolutional Block Attention Module
-Added to the head for improve model capability of extracting important information from the target object
+- Added to the head for improve model capability of extracting important information from the target object
 * Bi-directional Feature Pyramid Network
-Applied on head that enables easy and quick incorporation of multi-scale features.
+- Applied on head that enables easy and quick incorporation of multi-scale features.
 
 ## How To Use
 
