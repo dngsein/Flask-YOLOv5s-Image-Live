@@ -1,252 +1,127 @@
-# 使用yolov5训练自己的数据集（详细过程）并通过flask部署
 
-#### 依赖库
-- torch 
-- torchvision 
-- numpy
-- opencv-python
-- lxml
-- tqdm
-- flask
-- pillow
-- tensorboard
-- matplotlib
-- pycocotools
+<h1 align="center">
+  <br>
+  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.png" alt="Markdownify" width="200"></a>
+  <br>
+  Markdownify
+  <br>
+</h1>
 
-#### Windows，请使用 pycocotools-windows 代替 pycocotools
+<h4 align="center">A minimal Markdown Editor desktop app built on top of <a href="http://electron.atom.io" target="_blank">Electron</a>.</h4>
 
-#### Check all dependencies installed
-```
-pip install -r requirements.txt
-```
-### 1.准备数据集
+<p align="center">
+  <a href="https://badge.fury.io/js/electron-markdownify">
+    <img src="https://badge.fury.io/js/electron-markdownify.svg"
+         alt="Gitter">
+  </a>
+  <a href="https://gitter.im/amitmerchant1990/electron-markdownify"><img src="https://badges.gitter.im/amitmerchant1990/electron-markdownify.svg"></a>
+  <a href="https://saythanks.io/to/bullredeyes@gmail.com">
+      <img src="https://img.shields.io/badge/SayThanks.io-%E2%98%BC-1EAEDB.svg">
+  </a>
+  <a href="https://www.paypal.me/AmitMerchant">
+    <img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat">
+  </a>
+</p>
 
-这里以PASCAL VOC数据集为例，[提取码： 07wp](https://pan.baidu.com/s/1u8k9wlLUklyLxQnaSrG4xQ)
-将获取的数据集放到datasets目录下
-数据集结构如下：
-```
----VOC2012
---------Annotations
----------------xml0
----------------xml1
---------JPEGImages
----------------img0
----------------img1
---------pascal_voc_classes.txt
-```
-Annotations为所有的xml文件，JPEGImages为所有的图片文件，pascal_voc_classes.txt为类别文件。
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#download">Download</a> •
+  <a href="#credits">Credits</a> •
+  <a href="#related">Related</a> •
+  <a href="#license">License</a>
+</p>
 
-#### 获取标签文件
-yolo标签文件的格式如下：
-```
-102 0.682813 0.415278 0.237500 0.502778
-102 0.914844 0.396528 0.168750 0.451389
+![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
 
-第一位 label，为图片中物体的类别
-后面四位为图片中物体的位置，（xcenter, ycenter, h, w）即目标物体中心位置的相对坐标和相对高宽
-上图中存在两个目标
-```
-如果你已经拥有如上的label文件，可直接跳到下一步。
-没有如上标签文件，可使用 [labelimg  提取码  dbi2](https://pan.baidu.com/s/1oEFodW83koHLcGasRoBZhA) 打标签。生成xml格式的label文件，再转为yolo格式的label文件。labelimg的使用非常简单，在此不在赘述。
+## Key Features
 
-xml格式的label文件转为yolo格式:
+* LivePreview - Make changes, See changes
+  - Instantly see what your Markdown documents look like in HTML as you create them.
+* Sync Scrolling
+  - While you type, LivePreview will automatically scroll to the current location you're editing.
+* GitHub Flavored Markdown  
+* Syntax highlighting
+* [KaTeX](https://khan.github.io/KaTeX/) Support
+* Dark/Light mode
+* Toolbar for basic Markdown formatting
+* Supports multiple cursors
+* Save the Markdown preview as PDF
+* Emoji support in preview :tada:
+* App will keep alive in tray for quick usage
+* Full screen mode
+  - Write distraction free.
+* Cross platform
+  - Windows, macOS and Linux ready.
 
-```
-python center/xml_yolo.py
-```
+## How To Use
 
-pascal_voc_classes.txt，为你的类别对应的json文件。如下为voc数据集类别格式。
-```python
-["aeroplane","bicycle", "bird","boat","bottle","bus","car","cat","chair","cow","diningtable","dog","horse","motorbike","person","pottedplant","sheep","sofa","train", "tvmonitor"]
-```
-####  运行上面代码后的路径结构
-```
----VOC2012
---------Annotations
---------JPEGImages
---------pascal_voc_classes.json
----yolodata
---------images
---------labels
-```
+To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
-### 2.划分训练集和测试集
-训练集和测试集的划分很简单，将原始数据打乱，然后按 9  ：1划分为训练集和测试集即可。代码如下：
+```bash
+# Clone this repository
+$ git clone https://github.com/amitmerchant1990/electron-markdownify
 
-```
-python center/get_train_val.py
-```
-##### 运行上面代码会生成如下路径结构
-```
----VOC2012
---------Annotations
---------JPEGImages
---------pascal_voc_classes.json
----yolodata
---------images
---------labels
----traindata
---------images
-----------------train
-----------------val
---------labels
-----------------train
-----------------val
-```
-##### traindata就是最后需要的训练文件
+# Go into the repository
+$ cd electron-markdownify
 
-### 3. 训练模型
+# Install dependencies
+$ npm install
 
-yolov5的训练很简单，本文已将代码简化，代码结构如下：
-
-```
-dataset             # 数据集
-------traindata     # 训练数据集
-inference           # 输入输出接口
-------inputs        # 输入数据
-------outputs       # 输出数据
-config              # 配置文件
-------score.yaml    # 训练配置文件
-------yolov5l.yaml  # 模型配置文件
-models              # 模型代码
-runs	            # 日志文件
-utils               # 代码文件
-weights             # 模型保存路径，last.pt，best.pt
-train.py            # 训练代码
-detect.py           # 测试代码
+# Run the app
+$ npm start
 ```
 
-score.yaml解释如下：
-```
-# train and val datasets (image directory)
-train: ./datasets/traindata/images/train/
-val: ./datasets/traindata/images/val/
-# number of classes
-nc: 2
-# class names
-names: ['苹果','香蕉']
-```
-
-- train:   为图像数据的train，地址
-- val:     为图像数据的val，地址
-- nc:      为类别个数
-- names:   为类别对应的名称
+> **Note**
+> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
 
 
-##### yolov5l.yaml解释如下：
+## Download
 
-```
-nc: 2 # number of classes
-depth_multiple: 1.0  # model depth multiple
-width_multiple: 1.0  # layer channel multiple
-anchors:
-  - [10,13, 16,30, 33,23]  # P3/8
-  - [30,61, 62,45, 59,119]  # P4/16
-  - [116,90, 156,198, 373,326]  # P5/32
-backbone:
-  # [from, number, module, args]
-  [[-1, 1, Focus, [64, 3]],  # 1-P1/2
-   [-1, 1, Conv, [128, 3, 2]],  # 2-P2/4
-   [-1, 3, Bottleneck, [128]],
-   [-1, 1, Conv, [256, 3, 2]],  # 4-P3/8
-   [-1, 9, BottleneckCSP, [256]],
-   [-1, 1, Conv, [512, 3, 2]],  # 6-P4/16
-   [-1, 9, BottleneckCSP, [512]],
-   [-1, 1, Conv, [1024, 3, 2]], # 8-P5/32
-   [-1, 1, SPP, [1024, [5, 9, 13]]],
-   [-1, 6, BottleneckCSP, [1024]],  # 10
-  ]
-head:
-  [[-1, 3, BottleneckCSP, [1024, False]],  # 11
-   [-1, 1, nn.Conv2d, [na * (nc + 5), 1, 1, 0]],  # 12 (P5/32-large)
-   [-2, 1, nn.Upsample, [None, 2, 'nearest']],
-   [[-1, 6], 1, Concat, [1]],  # cat backbone P4
-   [-1, 1, Conv, [512, 1, 1]],
-   [-1, 3, BottleneckCSP, [512, False]],
-   [-1, 1, nn.Conv2d, [na * (nc + 5), 1, 1, 0]],  # 17 (P4/16-medium)
-   [-2, 1, nn.Upsample, [None, 2, 'nearest']],
-   [[-1, 4], 1, Concat, [1]],  # cat backbone P3
-   [-1, 1, Conv, [256, 1, 1]],
-   [-1, 3, BottleneckCSP, [256, False]],
-   [-1, 1, nn.Conv2d, [na * (nc + 5), 1, 1, 0]],  # 22 (P3/8-small)
-   [[], 1, Detect, [nc, anchors]],  # Detect(P3, P4, P5)
-  ]
-```
-- nc：为目标类别个数
-- depth_multiple 和 width_multiple：控制模型深度和宽度。不同的参数对应：s，m，l，x 模型。
-- anchors: 为对输入的目标框通过k-means聚类产生的基础框，通过这个基础框去预测目标的box。
-- yolov5会自动产生anchors，yolov5采用欧氏距离进行k-means聚类，再使用遗传算法做一系列的变异得到最终的anchors。但是本人采用欧氏距离进行k-means聚类得到的效果不如采用 1 - iou进行k-means聚类的效果。如果想要 1 - iou 进行k-means聚类源码请私聊我。但是效果其实相差无几。
-- backbone: 为图像特征提取部分的网络结构。
-- head:    为最后的预测部分的网络结构
+You can [download](https://github.com/amitmerchant1990/electron-markdownify/releases/tag/v1.2.0) the latest installable version of Markdownify for Windows, macOS and Linux.
 
+## Emailware
 
-#####train.py配置十分简单：
-![在这里插入图片描述](cam/1.png)
+Markdownify is an [emailware](https://en.wiktionary.org/wiki/emailware). Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <bullredeyes@gmail.com> about anything you'd want to say about this software. I'd really appreciate it!
 
-我们仅需修改如下参数即可
-```
-epoch:         控制训练迭代的次数
-batch_size     输入迭代的图片数量
-cfg:           配置网络模型路径
-data:          训练配置文件路径
-weights:       载入模型，进行断点继续训练
-```
-终端运行(默认yolov5l)
-```
- python train.py
-```
-即可开始训练。
+## Credits
 
-##### 训练过程
+This software uses the following open source packages:
 
-![](cam/train.jpg)
+- [Electron](http://electron.atom.io/)
+- [Node.js](https://nodejs.org/)
+- [Marked - a markdown parser](https://github.com/chjj/marked)
+- [showdown](http://showdownjs.github.io/showdown/)
+- [CodeMirror](http://codemirror.net/)
+- Emojis are taken from [here](https://github.com/arvida/emoji-cheat-sheet.com)
+- [highlight.js](https://highlightjs.org/)
 
-##### 训练结果
+## Related
 
-![](cam/result.png)
+[markdownify-web](https://github.com/amitmerchant1990/markdownify-web) - Web version of Markdownify
 
-### 4. 测试模型
+## Support
 
-![](cam/2.png)
+<a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
-##### 需要需改三个参数
-```
-source：        需要检测的images/videos路径
-out：		保存结果的路径
-weights：       训练得到的模型权重文件的路径
-```
-##### 你也可以使用在coco数据集上的权重文件进行测试将他们放到weights文件夹下
+<p>Or</p> 
 
-[提取码：hhbb](https://pan.baidu.com/s/18AD8HpLhcRGSKOwGwPJMMg)
+<a href="https://www.patreon.com/amitmerchant">
+	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+</a>
 
-终端运行
-```
- python detect.py
-```
-即可开始检测。
+## You may also like...
 
-##### 测试结果
+- [Pomolectron](https://github.com/amitmerchant1990/pomolectron) - A pomodoro app
+- [Correo](https://github.com/amitmerchant1990/correo) - A menubar/taskbar Gmail App for Windows and macOS
 
-![](cam/test.jpg)
+## License
 
-![](cam/test_re.jpg)
+MIT
 
-### 5.通过flask部署
+---
 
-flask的部署是非简单。如果有不明白的可以参考我之前的博客。
-
-[阿里云ECS部署python,flask项目，简单易懂，无需nginx和uwsgi](https://blog.csdn.net/qq_44523137/article/details/112676287?spm=1001.2014.3001.5501)
-
-[基于yolov3-deepsort-flask的目标检测和多目标追踪web平台](https://blog.csdn.net/qq_44523137/article/details/116323516?spm=1001.2014.3001.5501)
-
-
-
-终端运行
-```
- python app.py
-```
-即可开始跳转到网页，上传图片进行检测。
-
-
-
+> [amitmerchant.com](https://www.amitmerchant.com) &nbsp;&middot;&nbsp;
+> GitHub [@amitmerchant1990](https://github.com/amitmerchant1990) &nbsp;&middot;&nbsp;
+> Twitter [@amit_merchant](https://twitter.com/amit_merchant)
 
