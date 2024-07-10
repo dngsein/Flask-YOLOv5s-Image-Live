@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Helmet Detection</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="/static/assets/css/style.css">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target=".navbar">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="/static/assets/images/YOLOv5_banner.svg" width="190" height="80" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hero">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Guide</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/dngsein"><img src="/static/assets/images/github.png" width="20" height="20" alt=""></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero" class="min-vh-100 d-flex align-items-center text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 data-aos="fade-left" class="text-uppercase text-white fw-semibold display-1">Helmet Detection</h1>
+                    <h5 class="text-white mt-3 mb-4" data-aos="fade-right">An safety helmet detection system with enhanced architecture</h5>
+                    <div data-aos="fade-up" data-aos-delay="50">
+                        <a href="image" class="btn btn-brand me-2">Image Inference</a>
+                        <a href="stream" class="btn btn-light ms-2">Live Detection</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GUIDE but Possible change with model explanation-->
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="50">
+                    <div class="section-title">
+                        <h1 class="display-4 fw-semibold">About Models</h1>
+                        <div class="line"></div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between align-items-center">
+                <div class="col-lg-6 center" data-aos="fade-down" data-aos-delay="50">
+                    <img src="/static/assets/images/model-person (2).jpg" width="500" height="" alt="">
+                </div>
+                <div data-aos="fade-down" data-aos-delay="150" class="col-lg-5">
+                    <h1>YOLOv5s Modified</h1>
+                    <p class="mt-3 mb-4">The model was builded by applying architectural modifications to enhance the ability and performance of the model to perform object detection tasks.
+                        These modifications aim to address multi-scale problem and improve the accuracy of YOLOv5s.
+                    </p>
+                    
+                    <div class="d-flex pt-4 mb-3">
+                        <div class="iconbox me-4">
+                            <i class="ri-file-fill"></i>
+                        </div>
+                        <div>
+                            <h5>Transformer</h5>
+                            <p>Added as block encoder and prediction head to enhance feature extraction and reduce computational cost</p>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <div class="iconbox me-4">
+                          <i class="ri-vidicon-fill"></i>
+                        </div>
+                        <div>
+                            <h5>CBAM</h5>
+                            <p>Added to the head for improve model capability of extracting important information from the target object</p>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <div class="iconbox me-4">
+                          <i class="ri-vidicon-fill"></i>
+                        </div>
+                        <div>
+                            <h5>BiFPN</h5>
+                            <p>Applid on head that enables easy and quick incorporation of multi-scale features.</p>
+                        </div>
+                    </div>
+                    
+                  </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="/static/assets/js/main.js"></script>
+</body>
+</html>
