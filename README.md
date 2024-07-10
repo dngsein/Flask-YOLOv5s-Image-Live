@@ -9,7 +9,7 @@
 <p align="center">
   <a href="#model">Model</a> •
   <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Reference</a> •
+  <a href="#download">Reference</a>
 </p>
 
 ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
