@@ -9,7 +9,7 @@
 <p align="center">
   <a href="#model">Model</a> •
   <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Reference</a>
+  <a href="#credits">Reference</a>
 </p>
 
 ![image](https://github.com/dngsein/Flask-YOLOv5s-Image-Live/assets/89962078/3d499766-0ea1-40f2-af87-a2341ef0a217)
