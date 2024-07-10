@@ -12,7 +12,7 @@
   <a href="#download">Reference</a>
 </p>
 
-![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
+![screenshot](https://github.com/dngsein/Flask-YOLOv5s-Image-Live/issues/1#issue-2400690741)
 
 ## Model
 
