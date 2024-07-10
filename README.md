@@ -18,33 +18,24 @@
 
 The model was builded by applying architectural modifications to enhance the ability and performance of the model to perform object detection tasks. These modifications aim to address multi-scale problem and improve the accuracy of YOLOv5s.
 
-* Transformer
-- Added as block encoder and prediction head to enhance feature extraction and reduce computational cost
-* Convolutional Block Attention Module
-- Added to the head for improve model capability of extracting important information from the target object
-* Bi-directional Feature Pyramid Network
-- Applied on head that enables easy and quick incorporation of multi-scale features.
+* **Transformer** added as block encoder and prediction head to enhance feature extraction and reduce computational cost
+* **Convolutional Block Attention Module** added to the head for improve model capability of extracting important information from the target object
+* **Bi-directional Feature Pyramid Network** applied on head that enables easy and quick incorporation of multi-scale features.
 
 ## How To Use
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To run this application, you'll need [torch](https://pytorch.org/get-started/locally/) and [flask](https://flask.palletsprojects.com/en/3.0.x/installation/) installed on your computer. From your command line:
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/amitmerchant1990/electron-markdownify
+$ git clone https://github.com/dngsein/Flask-YOLOv5s-Image-Live
 
-# Go into the repository
-$ cd electron-markdownify
-
-# Install dependencies
-$ npm install
-
-# Run the app
-$ npm start
+# Run web application
+$ py app.py
 ```
 
 > **Note**
-> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+> Recommended for using virtual environment, [see this guide](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/)
 
 
 ## Download
